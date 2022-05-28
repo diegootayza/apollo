@@ -5,6 +5,7 @@ services:
         build: .
         container_name: node
         restart: unless-stopped
+
     nginx:
         depends_on:
             - node
@@ -18,12 +19,14 @@ services:
             - ./nginx:/etc/nginx/conf.d/:ro
             - ./certbot/www:/var/www/certbot/:ro
             - ./certbot/conf:/etc/nginx/ssl/:ro
+
     certbot:
+        depends_on:
+            - nginx
         image: certbot/certbot
         container_name: certbot
         restart: unless-stopped
         volumes:
             - ./certbot/www:/var/www/certbot/:rw
             - ./certbot/conf:/etc/letsencrypt/:rw
-        command:
-            - certonly --dry-run --webroot --webroot-path /var/www/certbot/ --email certbot@quesalio.com --agree-tos --no-eff-email --non-interactive --force-renewal -d production.quesalio.com
+        command: certonly --webroot --webroot-path=/var/www/certbot/ --email certbot@quesalio.com --agree-tos --no-eff-email --staging -d production.quesalio.com
