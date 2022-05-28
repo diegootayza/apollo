@@ -5,28 +5,5 @@ services:
         build: .
         container_name: node
         restart: unless-stopped
-
-    nginx:
-        depends_on:
-            - node
-        image: nginx:stable-alpine
-        container_name: nginx
-        restart: unless-stopped
         ports:
-            - '80:80'
-            - '443:443'
-        volumes:
-            - ./nginx:/etc/nginx/conf.d/:ro
-            - ./certbot/www:/var/www/certbot/:ro
-            - ./certbot/conf:/etc/nginx/ssl/:ro
-
-    certbot:
-        depends_on:
-            - nginx
-        image: certbot/certbot
-        container_name: certbot
-        restart: unless-stopped
-        volumes:
-            - ./certbot/www:/var/www/certbot/:rw
-            - ./certbot/conf:/etc/letsencrypt/:rw
-        command: certonly --webroot --webroot-path /var/www/certbot/ --email certbot@quesalio.com --agree-tos --no-eff-email --force-renewal -d production.quesalio.com
+            - '4000:4000'
