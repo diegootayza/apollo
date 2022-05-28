@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+    node:
+        build: .
+        container_name: node
+        restart: unless-stopped
+    nginx:
+        depends_on:
+            - node
+        image: nginx:stable-alpine
+        container_name: nginx
+        restart: unless-stopped
+        ports:
+            - '80:80'
+        volumes:
+            - ./nginx:/etc/nginx/conf.d
