@@ -20,6 +20,10 @@ services:
             - ./certbot/conf:/etc/nginx/ssl/:ro
     certbot:
         image: certbot/certbot
+        container_name: certbot
+        restart: unless-stopped
         volumes:
             - ./certbot/www:/var/www/certbot/:rw
             - ./certbot/conf:/etc/letsencrypt/:rw
+        command:
+            - certonly --webroot --webroot-path /var/www/certbot/ -d production.quesalio.com
