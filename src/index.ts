@@ -12,7 +12,7 @@ const main = async () => {
     await connection()
     const app = express()
     const httpServer = createServer(app)
-    const wsServer = new WebSocketServer({ path: '/graphql', server: httpServer })
+    const wsServer = new WebSocketServer({ path: '/subscriptions', server: httpServer })
     const serverCleanup = useServer({ schema }, wsServer)
     const apolloServer = new ApolloServer({
         schema,
