@@ -362,11 +362,11 @@ const resolvers = {
             return await Loto.find({}, null, { limit, sort: { date: -1 } })
         },
         matutina: async (root: any, { ids, date }: any) => {
-            const array = ids.split(',')
-            return await Matutina.find({ date: { $eq: new Date(date) }, id_loteria: { $in: array } }, null, {})
+            const array = ids ? ids.split(',') : []
+            return await Matutina.find({ date: { $eq: date ? new Date(date) : new Date() }, id_loteria: { $in: array } }, null, {})
         },
-        matutina_modified: async (root: any, { ids }: any, { pubsub }: any) => {
-            const array = ids.split(',')
+        matutina_modified: async (root: any, { ids }: any, {}: any) => {
+            const array = ids ? ids.split(',') : []
             const docs = await Matutina.find({ _id: { $in: array } }, null, {})
             pubsub.publish('matutina_modified', docs)
             return docs
@@ -378,11 +378,11 @@ const resolvers = {
             return await MeaningType.find({ _id: { $eq: id } }, null, {})
         },
         nocturna: async (root: any, { ids, date }: any) => {
-            const array = ids.split(',')
-            return await Nocturna.find({ date: { $eq: new Date(date) }, id_loteria: { $in: array } }, null, {})
+            const array = ids ? ids.split(',') : []
+            return await Nocturna.find({ date: { $eq: date ? new Date(date) : new Date() }, id_loteria: { $in: array } }, null, {})
         },
-        nocturna_modified: async (root: any, { ids }: any, { pubsub }: any) => {
-            const array = ids.split(',')
+        nocturna_modified: async (root: any, { ids }: any, {}: any) => {
+            const array = ids ? ids.split(',') : []
             const docs = await Nocturna.find({ _id: { $in: array } }, null, {})
             pubsub.publish('nocturna_modified', docs)
             return docs
@@ -400,21 +400,21 @@ const resolvers = {
             return await PoceadaPlus.find({}, null, { limit, sort: { date: -1 } })
         },
         previa: async (root: any, { ids, date }: any) => {
-            const array = ids.split(',')
-            return await Previa.find({ date: { $eq: new Date(date) }, id_loteria: { $in: array } }, null, {})
+            const array = ids ? ids.split(',') : []
+            return await Previa.find({ date: { $eq: date ? new Date(date) : new Date() }, id_loteria: { $in: array } }, null, {})
         },
-        previa_modified: async (root: any, { ids }: any, { pubsub }: any) => {
-            const array = ids.split(',')
+        previa_modified: async (root: any, { ids }: any, {}: any) => {
+            const array = ids ? ids.split(',') : []
             const docs = await Previa.find({ _id: { $in: array } }, null, {})
             pubsub.publish('previa_modified', docs)
             return docs
         },
         primera: async (root: any, { ids, date }: any) => {
-            const array = ids.split(',')
-            return await Primera.find({ date: { $eq: new Date(date) }, id_loteria: { $in: array } }, null, {})
+            const array = ids ? ids.split(',') : []
+            return await Primera.find({ date: { $eq: date ? new Date(date) : new Date() }, id_loteria: { $in: array } }, null, {})
         },
-        primera_modified: async (root: any, { ids }: any, { pubsub }: any) => {
-            const array = ids.split(',')
+        primera_modified: async (root: any, { ids }: any, {}: any) => {
+            const array = ids ? ids.split(',') : []
             const docs = await Primera.find({ _id: { $in: array } }, null, {})
             pubsub.publish('primera_modified', docs)
             return docs
@@ -434,17 +434,17 @@ const resolvers = {
             let month: any = today.month().valueOf() + 1
             if (month < 10) month = '0' + month
             const date = today.year() + '-' + month + '-' + today.date()
-            return await Recomendation.find({ date: { $eq: new Date(date) }, id_user: id_user }, null, {})
+            return await Recomendation.find({ date: { $eq: date ? new Date(date) : new Date() }, id_user: id_user }, null, {})
         },
         schedule_draw: async (root: any, { draw, day }: any) => {
             return await ScheduleDraw.find({ $and: [{ draw: { $eq: draw }, day: { $gte: day } }] }, null, { limit: 1 })
         },
         vespertina: async (root: any, { ids, date }: any) => {
-            const array = ids.split(',')
-            return await Vespertina.find({ date: { $eq: new Date(date) }, id_loteria: { $in: array } }, null, {})
+            const array = ids ? ids.split(',') : []
+            return await Vespertina.find({ date: { $eq: date ? new Date(date) : new Date() }, id_loteria: { $in: array } }, null, {})
         },
         vespertina_modified: async (root: any, { ids }: any) => {
-            const array = ids.split(',')
+            const array = ids ? ids.split(',') : []
             return await Vespertina.find({ _id: { $in: array } }, null, {})
         },
         weekly: async (root: any, {}: any) => {
