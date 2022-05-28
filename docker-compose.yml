@@ -29,4 +29,4 @@ services:
         volumes:
             - ./certbot/www:/var/www/certbot/:rw
             - ./certbot/conf:/etc/letsencrypt/:rw
-        command: certonly --webroot --webroot-path=/var/www/certbot/ --email certbot@quesalio.com --agree-tos --no-eff-email --staging -d production.quesalio.com
+        command: certonly --webroot --webroot-path=/var/www/certbot/ --email certbot@quesalio.com --agree-tos --no-eff-email --force-renewal -d production.quesalio.com
