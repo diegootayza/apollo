@@ -24,7 +24,7 @@ const main = async () => {
 
     const apolloServer = new ApolloServer({
         schema,
-        csrfPrevention: true,
+        csrfPrevention: false,
         plugins: [
             ApolloServerPluginDrainHttpServer({ httpServer }),
             {
