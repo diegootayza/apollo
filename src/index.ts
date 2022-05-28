@@ -31,7 +31,7 @@ const main = async () => {
     })
 
     await apolloServer.start()
-    apolloServer.applyMiddleware({ app, cors: { origin: '*', allowedHeaders: ['authorization'], exposedHeaders: ['authorization'] } })
+    apolloServer.applyMiddleware({ app, cors: { origin: '*', allowedHeaders: '*', exposedHeaders: '*' } })
 
     httpServer.listen({ port: 4000 }, () => {
         console.log(`🚀 Server ready at http://localhost:4000`)
