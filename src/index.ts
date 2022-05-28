@@ -26,7 +26,7 @@ const main = async () => {
         schema,
         csrfPrevention: false,
         plugins: [
-            // ApolloServerPluginDrainHttpServer({ httpServer }),
+            ApolloServerPluginDrainHttpServer({ httpServer }),
             // {
             //     serverWillStart: async () => ({
             //         drainServer: async () => {
