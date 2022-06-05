@@ -145,7 +145,7 @@ export default (app: Express) => {
 
         if (key === 'Game - 1') {
             for (const item of db_a) {
-                result.push(`${item.icon} ${item.text}`)
+                result.push(`${item.icon} ${item.text} ${item.extra}`)
             }
         }
 
