@@ -16,7 +16,7 @@ const main = async () => {
     const httpServer = createServer(app)
     // const wsServer = new WebSocketServer({ path: '/graphql', server: httpServer })
     // const serverCleanup = useServer({ schema }, wsServer)
-    const subscriptionServer = SubscriptionServer.create({ schema, execute, subscribe }, { path: '/subscriptions', server: httpServer })
+    const subscriptionServer = SubscriptionServer.create({ schema, execute, subscribe }, { path: '/graphql', server: httpServer })
 
     const apolloServerA = new ApolloServer({
         schema,
@@ -40,26 +40,9 @@ const main = async () => {
         ],
     })
 
-    const apolloServerB = new ApolloServer({
-        schema,
-        csrfPrevention: true,
-        plugins: [
-            ApolloServerPluginDrainHttpServer({ httpServer }),
-            {
-                serverWillStart: async () => ({
-                    drainServer: async () => {
-                        subscriptionServer.close()
-                    },
-                }),
-            },
-        ],
-    })
-
     await apolloServerA.start()
-    await apolloServerB.start()
 
     apolloServerA.applyMiddleware({ app, path: '/graphql', cors: { origin: '*' } })
-    apolloServerB.applyMiddleware({ app, path: '/gql', cors: { origin: '*' } })
 
     httpServer.listen({ port: 4000 }, () => {
         console.log(`🚀 Server ready at http://localhost:4000`)
