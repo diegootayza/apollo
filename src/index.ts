@@ -2,17 +2,27 @@ import { ApolloServer } from 'apollo-server-express'
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
 import { createServer } from 'http'
 import { execute, subscribe } from 'graphql'
-import { useServer } from 'graphql-ws/lib/use/ws'
 import { SubscriptionServer } from 'subscriptions-transport-ws'
+import { useServer } from 'graphql-ws/lib/use/ws'
 import { WebSocketServer } from 'ws'
+import cors from 'cors'
 import express from 'express'
 
 import schema from './schema'
 import connection from './connection'
+import modules from './modules'
 
 const main = async () => {
     await connection()
+
     const app = express()
+
+    app.use(cors({ origin: '*' }))
+    app.use(express.json())
+    app.use(express.urlencoded({ extended: true }))
+
+    modules(app)
+
     const httpServer = createServer(app)
     // const wsServer = new WebSocketServer({ path: '/graphql', server: httpServer })
     // const serverCleanup = useServer({ schema }, wsServer)
