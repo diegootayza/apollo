@@ -8,10 +8,10 @@ import Primera from '../../mongoose/Primera'
 import Vespertina from '../../mongoose/Vespertina'
 
 const db_a = [
-    { key: 1, icon: '1️⃣', text: 'Previa' },
-    { key: 2, icon: '2️⃣', text: 'Matutina' },
-    { key: 3, icon: '3️⃣', text: 'Vespertina' },
-    { key: 4, icon: '4️⃣', text: 'Nocturna' },
+    { key: 1, icon: '1️⃣', text: 'PREVIA', extra: '(Hay 5) 10:15 ⌚' },
+    { key: 2, icon: '2️⃣', text: 'MATUTINA', extra: '(Hay 5) 12:00 ⌚' },
+    { key: 3, icon: '3️⃣', text: 'VESPERTINA', extra: '(Hay 5) 18:00 ⌚' },
+    { key: 4, icon: '4️⃣', text: 'NOCTURNA', extra: '(Hay 6) 21:00 ⌚' },
 ]
 
 const db_b = [
@@ -144,9 +144,6 @@ export default (app: Express) => {
         let result: any[] = []
 
         if (key === 'Game - 1') {
-            result.push(`¿En dónde jugamos?`)
-            result.push(`------------------------------`)
-
             for (const item of db_a) {
                 result.push(`${item.icon} ${item.text}`)
             }
@@ -162,9 +159,8 @@ export default (app: Express) => {
         }
 
         if (key === 'Game - 3') {
-            result.push(`${searchData('db_a', parameters.game_1_option)} - ${searchData('db_b', parameters.game_2_option)}`)
-            result.push(`------------------------------`)
-            result.push(`✍️ Ahora escribe los números que quieres jugar`)
+            result.push(`${searchData('db_a', parameters.game_1_option)} - ${searchData('db_b', parameters.game_2_option)} ¿Qué jugamos?`)
+            result.push(`✍️ Ahora escribe los números que quieres jugar...`)
         }
 
         if (key === 'Game - 4') {
